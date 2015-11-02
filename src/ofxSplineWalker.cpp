@@ -5,9 +5,9 @@
 //  Created by SakuragiYoshimasa on 2015/10/31.
 //
 //
-#include "SplineWalker.h"
+#include "ofxSplineWalker.h"
 
-void SplineWalker::setup(BezierSpline *sp, float dur){
+void ofxSplineWalker::setup(BezierSpline *sp, float dur){
     spline = sp;
     duration = dur;
     index = 1;
@@ -17,7 +17,7 @@ void SplineWalker::setup(BezierSpline *sp, float dur){
     playing = false;
 }
 
-void SplineWalker::update(){
+void ofxSplineWalker::update(){
     if(!playing) return;
     if(forward){
         progress += 0.1 / duration;
@@ -34,19 +34,19 @@ void SplineWalker::update(){
     updateProgress(indexLook, progressLook, loolAt, forwardLook);
 }
 
-void SplineWalker::setMode(WalkMode mode){
+void ofxSplineWalker::setMode(WalkMode mode){
     this->mode = mode;
 }
 
-void SplineWalker::play(){
+void ofxSplineWalker::play(){
     playing = true;
 }
 
-void SplineWalker::stop(){
+void ofxSplineWalker::stop(){
     playing = false;
 }
 
-void SplineWalker::updateProgress(int &i, float &p, ofVec3f &v, bool &f){
+void ofxSplineWalker::updateProgress(int &i, float &p, ofVec3f &v, bool &f){
     if(f){
         if(p >= 1.0){
             if(spline->GetCurveNum() > i){
@@ -76,10 +76,10 @@ void SplineWalker::updateProgress(int &i, float &p, ofVec3f &v, bool &f){
     v = spline->GetPoint(p, i);
 }
 
-const ofVec3f SplineWalker::getPosition(){
+const ofVec3f ofxSplineWalker::getPosition(){
     return position;
 }
 
-const ofVec3f SplineWalker::getLookAt(){
+const ofVec3f ofxSplineWalker::getLookAt(){
     return loolAt;
 }

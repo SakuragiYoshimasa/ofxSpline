@@ -14,7 +14,7 @@ enum WalkMode {
     PINGPONG
 };
 
-class SplineWalker {
+class ofxSplineWalker {
 public:
     void setup(BezierSpline *sp, float dur);
     void update();

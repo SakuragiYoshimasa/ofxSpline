@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxSplineEditor.h"
-#include "SplineWalker.h"
+#include "ofxSplineWalker.h"
 
 class ofApp : public ofBaseApp{
     
@@ -22,7 +22,7 @@ public:
     void gotMessage(ofMessage msg);
     
     ofxSplineEditor editor;
-    SplineWalker walker;
+    ofxSplineWalker walker;
     int mouseX,mouseY;
     ofEasyCam cam;
     ofCamera walkerCamera;
