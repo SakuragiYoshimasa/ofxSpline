@@ -41,6 +41,7 @@ private:
     ofxToggle drawDirectionButton;
     ofxToggle drawControlLine;
     ofxToggle addCurve;
+    ofxToggle removeCurve;
     ofxToggle editPointMode;
     ofxToggle savePoints;
     ofxToggle loadPoints;

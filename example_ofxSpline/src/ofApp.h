@@ -23,8 +23,9 @@ public:
     
     ofxSplineEditor editor;
     ofxSplineWalker walker;
-    int mouseX,mouseY;
     ofEasyCam cam;
     ofCamera walkerCamera;
     bool walkerMode;
+    
+    int mouseX,mouseY;
 };

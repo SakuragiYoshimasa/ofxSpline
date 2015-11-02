@@ -54,6 +54,15 @@ void BezierSpline::addCurve(){
     EnforceMode(points.size() - 4);
 }
 
+void BezierSpline::removeCurve(){
+    if(points.size() < 4) return;
+    for(int i = 0; i < 3; i++){
+        points.erase(points.end());
+    }
+    modes.erase(modes.end());
+    curveNum--;
+}
+
 void BezierSpline::SetControlPoint(int index, ofVec3f point){
     //move controllPoints too
     if(index % 3 == 0){

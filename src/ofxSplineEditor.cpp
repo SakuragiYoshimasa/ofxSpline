@@ -15,6 +15,7 @@ void ofxSplineEditor::setup(){
     gui.add(savePoints.setup("Save", false));
     gui.add(loadPoints.setup("Load", false));
     gui.add(addCurve.setup("AddCurve", false));
+    gui.add(removeCurve.setup("RemoveCurve", false));
     gui.add(editPointMode.setup("EditPointMode", false));
     gui.add(drawDirectionButton.setup("DrawDirection", true));
     gui.add(drawControlLine.setup("DrawControlLine", true));
@@ -50,6 +51,10 @@ void ofxSplineEditor::updateSpline(){
     if(addCurve) {
         spline.addCurve();
         this->addCurve = false;
+    }
+    if(removeCurve){
+        spline.removeCurve();
+        this->removeCurve = false;
     }
 }
 

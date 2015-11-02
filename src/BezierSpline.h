@@ -20,6 +20,7 @@ public:
     void saveSpline(string fileName);
     void loadSpline(string fileName);
     void addCurve();
+    void removeCurve();
     void SetControlPoint(int index, ofVec3f point);
     void SetControlPointMode(int index, ControlMode mode);
     const int GetPointNum();
