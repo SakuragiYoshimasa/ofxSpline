@@ -37,6 +37,7 @@ void ofxSplineEditor::setup(){
     gui.add(minusCameraZ.setup("-Z", false));
     strokeWidth = 1.5;
     cameraPos = ofVec3f(ofGetWidth()/2, ofGetHeight()/2, 0);
+    splineColor = ofColor(255,255,255);
 }
 
 void ofxSplineEditor::update(){
@@ -106,7 +107,7 @@ void ofxSplineEditor::draw(){
     //drawMarkPoint();
     ofSetLineWidth(3);
     ofPath line = ofPath();
-    line.setStrokeColor(ofColor(255,255,255));
+    line.setStrokeColor(splineColor);
     line.setFilled(false);
     line.setStrokeWidth(strokeWidth);
     float lineSteps = 10.0;
@@ -148,6 +149,10 @@ void ofxSplineEditor::setFileName(string fileName){
 
 void ofxSplineEditor::setStrokeWidth(float width){
     strokeWidth = width;
+}
+
+void ofxSplineEditor::setSplineColor(const ofColor c){
+    splineColor = c;
 }
 
 void ofxSplineEditor::beginEditorCam(){

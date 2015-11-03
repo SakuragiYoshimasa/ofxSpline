@@ -23,6 +23,7 @@ public:
     void drawgui();
     void setFileName(string fileName);
     void setStrokeWidth(float width);
+    void setSplineColor(const ofColor c);
     void beginEditorCam();
     void endEditorCam();
     BezierSpline * getSpline();
@@ -68,6 +69,7 @@ private:
     BezierSpline spline;
     ofEasyCam editorCam;
     ofVec3f cameraPos;
+    ofColor splineColor;
     float strokeWidth;
     string fileName = "";
 };
