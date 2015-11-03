@@ -21,6 +21,7 @@ public:
     };
     
     void reset();
+    void drawSpline(float strokeWidth = 1.5 , float lineStep = 10.0, bool drawDirection = true, ofColor splineColor = ofColor(255,255,255));
     void saveSpline(string fileName);
     void loadSpline(string fileName);
     void addCurve();

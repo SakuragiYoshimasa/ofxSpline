@@ -23,6 +23,27 @@ void ofxSpline::reset(){
     modeColors[2] = ofColor(0,255,255,255);
 }
 
+void ofxSpline::drawSpline(float strokeWidth, float lineStep, bool drawDirection, ofColor splineColor){
+    ofSetLineWidth(3);
+    ofPath line = ofPath();
+    line.setStrokeColor(splineColor);
+    line.setFilled(false);
+    line.setStrokeWidth(strokeWidth);
+    float lineSteps = 10.0;
+    ofVec3f lineStart = this->GetPoint(0,1);
+    line.moveTo(lineStart);
+    for(int index = 1; index <= this->GetCurveNum(); index++){
+        for(int i = 0; i <= lineSteps; i++){
+            ofVec3f lineEnd = this->GetPoint(float(i)/lineSteps, index);
+            line.lineTo(lineEnd);
+            ofSetColor(0, 255, 0);
+            if(drawDirection) ofLine(lineEnd, lineEnd + this->GetDirection(float(i)/lineSteps, index));
+            lineStart = lineEnd;
+        }
+    }
+    line.draw();
+};
+
 void ofxSpline::saveSpline(string fileName){
     csvOperator::saveSplinePoints(fileName, points);
 }

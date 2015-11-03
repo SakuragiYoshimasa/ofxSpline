@@ -105,25 +105,7 @@ void ofxSplineEditor::drawgui(){
 }
 
 void ofxSplineEditor::draw(){
-    //drawMarkPoint();
-    ofSetLineWidth(3);
-    ofPath line = ofPath();
-    line.setStrokeColor(splineColor);
-    line.setFilled(false);
-    line.setStrokeWidth(strokeWidth);
-    float lineSteps = 10.0;
-    ofVec3f lineStart = spline->GetPoint(0,1);
-    line.moveTo(lineStart);
-    for(int index = 1; index <= spline->GetCurveNum(); index++){
-        for(int i = 0; i <= lineSteps; i++){
-            ofVec3f lineEnd = spline->GetPoint(float(i)/lineSteps, index);
-            line.lineTo(lineEnd);
-            ofSetColor(0, 255, 0);
-            if(drawDirectionButton) ofLine(lineEnd, lineEnd + spline->GetDirection(float(i)/lineSteps, index));
-            lineStart = lineEnd;
-        }
-    }
-    line.draw();
+    spline->drawSpline(strokeWidth, 10.0, drawDirectionButton, splineColor);
     ofSetColor(255, 0, 0);
      for(int i = 0; i < spline->GetPointNum(); i++){
          ofSetColor(spline->modeColors[(int)(spline->GetControlPointMode(i))]);
@@ -133,7 +115,7 @@ void ofxSplineEditor::draw(){
          }
          ofDrawBox(spline->GetPoints().at(i), pointSize);
          ofSetColor(255, 200, 100);
-         line.setStrokeWidth(1.0);
+         ofSetLineWidth(1.4);
          if(!drawControlLine) continue;
          if(i % 3 == 1){
              ofLine(spline->GetPoints().at(i), spline->GetPoints().at(i - 1));
