@@ -1,8 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxSplineEditor.h"
-#include "ofxSplineWalker.h"
+#include "ofxSpline.h"
+
 
 class ofApp : public ofBaseApp{
     

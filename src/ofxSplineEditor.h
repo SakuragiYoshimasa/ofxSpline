@@ -10,7 +10,7 @@
 #define ofxSplineEditor_h
 
 #include "ofMain.h"
-#include "BezierSpline.h"
+#include "ofxSpline.h"
 #include "ofxGui.h"
 #include "csvOperator.h"
 
@@ -26,7 +26,7 @@ public:
     void setSplineColor(const ofColor c);
     void beginEditorCam();
     void endEditorCam();
-    BezierSpline * getSpline();
+    ofxSpline * getSpline();
 private:
     
     void updateSpline();
@@ -66,7 +66,7 @@ private:
     //-------------------------------------
     //
     //-------------------------------------
-    BezierSpline spline;
+    ofxSpline * spline;
     ofEasyCam editorCam;
     ofVec3f cameraPos;
     ofColor splineColor;

@@ -7,7 +7,7 @@
 //
 #ifndef SplineWalker_h
 #define SplineWalker_h
-#include "BezierSpline.h"
+#include "ofxSpline.h"
 
 enum WalkMode {
     LOOP,
@@ -16,7 +16,7 @@ enum WalkMode {
 
 class ofxSplineWalker {
 public:
-    void setup(BezierSpline *sp, float dur);
+    void setup(ofxSpline *sp, float dur);
     void update();
     void setMode(WalkMode mode);
     void play();
@@ -38,6 +38,6 @@ private:
     WalkMode mode;
     ofVec3f position;
     ofVec3f loolAt;
-    BezierSpline* spline;
+    ofxSpline* spline;
 };
 #endif

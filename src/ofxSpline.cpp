@@ -6,9 +6,9 @@
 //
 //
 
-#include "BezierSpline.h"
+#include "ofxSpline.h"
 
-void BezierSpline::reset(){
+void ofxSpline::reset(){
     points.clear();
     points.push_back(*new ofVec3f(-200,-100,0));
     points.push_back(*new ofVec3f(-100,100,0));
@@ -23,11 +23,11 @@ void BezierSpline::reset(){
     modeColors[2] = ofColor(0,255,255,255);
 }
 
-void BezierSpline::saveSpline(string fileName){
+void ofxSpline::saveSpline(string fileName){
     csvOperator::saveSplinePoints(fileName, points);
 }
 
-void BezierSpline::loadSpline(string fileName){
+void ofxSpline::loadSpline(string fileName){
     points.clear();
     modes.clear();
     modes.push_back(MIRRORED);
@@ -41,7 +41,7 @@ void BezierSpline::loadSpline(string fileName){
     }
 }
 
-void BezierSpline::addCurve(){
+void ofxSpline::addCurve(){
     ofVec3f point = points[points.size() - 1];
     for(int i = 0; i < 3; i++){
         point.x += ofRandom(50);
@@ -54,7 +54,7 @@ void BezierSpline::addCurve(){
     EnforceMode(points.size() - 4);
 }
 
-void BezierSpline::removeCurve(){
+void ofxSpline::removeCurve(){
     if(points.size() < 4) return;
     for(int i = 0; i < 3; i++){
         points.erase(points.end());
@@ -63,7 +63,7 @@ void BezierSpline::removeCurve(){
     curveNum--;
 }
 
-void BezierSpline::SetControlPoint(int index, ofVec3f point){
+void ofxSpline::SetControlPoint(int index, ofVec3f point){
     //move controllPoints too
     if(index % 3 == 0){
         ofVec3f delta = point - points[index];
@@ -78,32 +78,32 @@ void BezierSpline::SetControlPoint(int index, ofVec3f point){
     EnforceMode(index);
 }
 
-void BezierSpline::SetControlPointMode(int index, ControlMode mode){
+void ofxSpline::SetControlPointMode(int index, ControlMode mode){
     modes[(index + 1)/3] = mode;
     EnforceMode(index);
 }
 
-const int BezierSpline::GetCurveNum(){
+const int ofxSpline::GetCurveNum(){
     return curveNum;
 }
 
-const int BezierSpline::GetPointNum(){
+const int ofxSpline::GetPointNum(){
     return points.size();
 }
 
-const vector<ofVec3f> BezierSpline::GetPoints(){
+const vector<ofVec3f> ofxSpline::GetPoints(){
     return points;
 }
 
-ofVec3f BezierSpline::GetControlPoint(int index){
+ofVec3f ofxSpline::GetControlPoint(int index){
     return points[index];
 }
 
-ControlMode BezierSpline::GetControlPointMode(int index){
+ControlMode ofxSpline::GetControlPointMode(int index){
     return modes[(index + 1) / 3];
 }
 
-ofVec3f BezierSpline::GetPoint(float t){
+ofVec3f ofxSpline::GetPoint(float t){
     if(t >= 1) t = 1;
     if(t < 0) t = 0;
     int i;
@@ -114,19 +114,19 @@ ofVec3f BezierSpline::GetPoint(float t){
     return GetPoint(t , i);
 }
 
-ofVec3f BezierSpline::GetPoint(float t, int curveIndex){
+ofVec3f ofxSpline::GetPoint(float t, int curveIndex){
     return Bezier::GetPoint(points[(curveIndex - 1) * 3], points[(curveIndex - 1) * 3 + 1], points[(curveIndex - 1) * 3 + 2], points[curveIndex * 3], t);
 }
 
-ofVec3f BezierSpline::GetVelocity(float t, int curveIndex){
+ofVec3f ofxSpline::GetVelocity(float t, int curveIndex){
     return  Bezier::GetFirstDerivative(points[(curveIndex - 1) * 3], points[(curveIndex - 1) * 3 + 1], points[(curveIndex - 1) * 3 + 2], points[curveIndex * 3], t);
 }
 
-ofVec3f BezierSpline::GetDirection(float t ,int curveIndex){
+ofVec3f ofxSpline::GetDirection(float t ,int curveIndex){
     return (GetVelocity(t, curveIndex)).normalize() * 100;
 }
 
-void BezierSpline::EnforceMode(int index){
+void ofxSpline::EnforceMode(int index){
     int modeIndex = (index + 1) / 3;
     ControlMode mode = modes[modeIndex];
     if(mode == FREE || modeIndex == 0 || modeIndex == modes.size() - 1){

@@ -8,11 +8,15 @@
 #define BezierSpline_h
 #include "ofMain.h"
 #include "Bezier.h"
-#include "csvOperator.h"
+class ofxSpline;
 
-class BezierSpline{
+#include "csvOperator.h"
+#include "ofxSplineEditor.h"
+#include "ofxSplineWalker.h"
+
+class ofxSpline {
 public:
-    BezierSpline(){
+    ofxSpline(){
         reset();
     };
     

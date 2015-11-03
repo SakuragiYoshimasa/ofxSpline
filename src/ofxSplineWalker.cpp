@@ -7,7 +7,7 @@
 //
 #include "ofxSplineWalker.h"
 
-void ofxSplineWalker::setup(BezierSpline *sp, float dur){
+void ofxSplineWalker::setup(ofxSpline *sp, float dur){
     spline = sp;
     duration = dur;
     index = 1;

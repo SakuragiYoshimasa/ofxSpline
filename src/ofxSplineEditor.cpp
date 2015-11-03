@@ -9,7 +9,8 @@
 #include "ofxSplineEditor.h"
 
 void ofxSplineEditor::setup(){
-    spline.reset();
+    spline = new ofxSpline();
+    spline->reset();
     gui.setup();
     gui.add(editPointLabel.setup("SplineEdit", ""));
     gui.add(savePoints.setup("Save", false));
@@ -19,7 +20,7 @@ void ofxSplineEditor::setup(){
     gui.add(editPointMode.setup("EditPointMode", false));
     gui.add(drawDirectionButton.setup("DrawDirection", true));
     gui.add(drawControlLine.setup("DrawControlLine", true));
-    gui.add(editPointIndex.setup("EditPointIndex", 0, 0, spline.GetPointNum()));
+    gui.add(editPointIndex.setup("EditPointIndex", 0, 0, spline->GetPointNum()));
     gui.add(pointSize.setup("PointSize", 5, 0, 100));
     gui.add(adjustScale.setup("AdjustScale", 10, 1, 200));
     gui.add(plusX.setup("+X", false));
@@ -45,16 +46,16 @@ void ofxSplineEditor::update(){
     updateSplineFileSystem();
     updateSplinePoint();
     updateCameraPosition();
-    editPointIndex.setMax(spline.GetPointNum());
+    editPointIndex.setMax(spline->GetPointNum());
 }
 
 void ofxSplineEditor::updateSpline(){
     if(addCurve) {
-        spline.addCurve();
+        spline->addCurve();
         this->addCurve = false;
     }
     if(removeCurve){
-        spline.removeCurve();
+        spline->removeCurve();
         this->removeCurve = false;
     }
 }
@@ -62,25 +63,25 @@ void ofxSplineEditor::updateSpline(){
 void ofxSplineEditor::updateSplineFileSystem(){
     if(fileName == "") return;
     if(savePoints){
-        spline.saveSpline(fileName);
+        spline->saveSpline(fileName);
         this->savePoints = false;
     }
     if(loadPoints){
-        spline.loadSpline(fileName);
+        spline->loadSpline(fileName);
         this->loadPoints = false;
     }
 }
 
 void ofxSplineEditor::updateSplinePoint(){
-    if(!editPointMode || spline.GetPoints().size() <= editPointIndex) return;
-    ofVec3f newPoint = spline.GetPoints().at(editPointIndex);
+    if(!editPointMode || spline->GetPoints().size() <= editPointIndex) return;
+    ofVec3f newPoint = spline->GetPoints().at(editPointIndex);
     if(plusX) newPoint.x += adjustScale;
     if(plusY) newPoint.y += adjustScale;
     if(plusZ) newPoint.z += adjustScale;
     if(minusX) newPoint.x -= adjustScale;
     if(minusY) newPoint.y -= adjustScale;
     if(minusZ) newPoint.z -= adjustScale;
-    spline.SetControlPoint(editPointIndex, newPoint);
+    spline->SetControlPoint(editPointIndex, newPoint);
 }
 
 void ofxSplineEditor::updateCameraPosition(){
@@ -95,8 +96,8 @@ void ofxSplineEditor::updateCameraPosition(){
     editorCam.setPosition(newCameraPos);
 }
 
-BezierSpline * ofxSplineEditor::getSpline(){
-    return &spline;
+ofxSpline * ofxSplineEditor::getSpline(){
+    return spline;
 }
 
 void ofxSplineEditor::drawgui(){
@@ -111,34 +112,34 @@ void ofxSplineEditor::draw(){
     line.setFilled(false);
     line.setStrokeWidth(strokeWidth);
     float lineSteps = 10.0;
-    ofVec3f lineStart = spline.GetPoint(0,1);
+    ofVec3f lineStart = spline->GetPoint(0,1);
     line.moveTo(lineStart);
-    for(int index = 1; index <= spline.GetCurveNum(); index++){
+    for(int index = 1; index <= spline->GetCurveNum(); index++){
         for(int i = 0; i <= lineSteps; i++){
-            ofVec3f lineEnd = spline.GetPoint(float(i)/lineSteps, index);
+            ofVec3f lineEnd = spline->GetPoint(float(i)/lineSteps, index);
             line.lineTo(lineEnd);
             ofSetColor(0, 255, 0);
-            if(drawDirectionButton) ofLine(lineEnd, lineEnd + spline.GetDirection(float(i)/lineSteps, index));
+            if(drawDirectionButton) ofLine(lineEnd, lineEnd + spline->GetDirection(float(i)/lineSteps, index));
             lineStart = lineEnd;
         }
     }
     line.draw();
     ofSetColor(255, 0, 0);
-     for(int i = 0; i < spline.GetPointNum(); i++){
-         ofSetColor(spline.modeColors[(int)(spline.GetControlPointMode(i))]);
+     for(int i = 0; i < spline->GetPointNum(); i++){
+         ofSetColor(spline->modeColors[(int)(spline->GetControlPointMode(i))]);
          if(i == editPointIndex){
              ofSetColor(255, 255, 0);
-             ofDrawBox(spline.GetPoints().at(i), pointSize * 3);
+             ofDrawBox(spline->GetPoints().at(i), pointSize * 3);
          }
-         ofDrawBox(spline.GetPoints().at(i), pointSize);
+         ofDrawBox(spline->GetPoints().at(i), pointSize);
          ofSetColor(255, 200, 100);
          line.setStrokeWidth(1.0);
          if(!drawControlLine) continue;
          if(i % 3 == 1){
-             ofLine(spline.GetPoints().at(i), spline.GetPoints().at(i - 1));
+             ofLine(spline->GetPoints().at(i), spline->GetPoints().at(i - 1));
          }
          if(i % 3 == 2){
-             ofLine(spline.GetPoints().at(i), spline.GetPoints().at(i + 1));
+             ofLine(spline->GetPoints().at(i), spline->GetPoints().at(i + 1));
          }
     }
 }
